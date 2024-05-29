@@ -51,32 +51,34 @@ class Hand:
             sorted_counts.append(joker_count)
             sorted_counts.sort(reverse= True)
 
-        if len(sorted_counts) == 1:
-            return Type.FIVE_OF_KIND
-        elif len(sorted_counts) == 2:
-            if sorted_counts[0] == 4:
-                return Type.FOUR_OF_KIND
-            else:
-                return Type.FULL_HOUSE
-        elif len(sorted_counts) == 3:
-            if sorted_counts[0] == 3:
-                return Type.THREE_OF_KIND
-            else:
-                return  Type.TWO_PAIR
-        elif len(sorted_counts) == 4:
-            return Type.ONE_PAIR
-        else:
-            return Type.HIGH_CARD
+        unique_card_count = len(sorted_counts)
+        match unique_card_count:
+            case 1:
+                return Type.FIVE_OF_KIND
+            case 2:
+                if sorted_counts[0] == 4:
+                    return Type.FOUR_OF_KIND
+                else:
+                    return Type.FULL_HOUSE
+            case 3:
+                if sorted_counts[0] == 3:
+                    return Type.THREE_OF_KIND
+                else:
+                    return  Type.TWO_PAIR
+            case 4:
+                return Type.ONE_PAIR
+            case _:
+                return Type.HIGH_CARD
 
     def __init__(self, cards: str, bid: int, joker_rule = False) -> None:
-            self.cards = [card for card in cards]
-            self.bid = bid
+        self.cards = [card for card in cards]
+        self.bid = bid
 
-            self.joker_rule = joker_rule
-            if joker_rule:
-                self._card_values['J'] = 1
+        self.joker_rule = joker_rule
+        if joker_rule:
+            self._card_values['J'] = 1
 
-            self.type = self._generate_type()
+        self.type = self._generate_type()
 
     def __lt__(self, other) -> bool:
         """comparison operator for the hand based on type and card value
