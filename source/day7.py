@@ -51,8 +51,7 @@ class Hand:
             sorted_counts.append(joker_count)
             sorted_counts.sort(reverse= True)
 
-        unique_card_count = len(sorted_counts)
-        match unique_card_count:
+        match len(sorted_counts):
             case 1:
                 return Type.FIVE_OF_KIND
             case 2:
