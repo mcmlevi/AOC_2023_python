@@ -16,6 +16,18 @@ def part1(instructions, mappings) -> int:
                 return step_count
 
 def part2(instructions, mappings) -> int:
+    """Calculate the number of steps before all nodes end on an Z
+
+    :param instructions: the instructions to follow
+    :param mappings: the mappings for the instructions
+    :return: the number of steps needed
+    """
+
+    # I really don't like this approach this relies on the fact that it seems AOC
+    # enforces the cycle is symmetric and the distance to an Z node is exactly half the cycle
+    # meaning you just really need to find the first Z node and your problem is solved.
+    # Once you have these distances you can just take the LCM and you have your answer
+
     step_count = 0
     current_nodes = [key for key in mappings.keys() if key[-1] == 'A']
     distances = [0] * len(current_nodes)
@@ -49,6 +61,8 @@ def main():
         instructions = lines[0].strip()
         mappings = {}
         for line in lines[2:]:
+            # I am to lazy to do nice pattern matching so we simply remove any
+            # characters besides spaces and the mapping entries.
             line = line.translate({ord('('): None, ord(')'): None,
                                    ord(','): None, ord('='): None, ord('\n'): None})
 
@@ -56,7 +70,7 @@ def main():
 
             mappings[key] = (left, right)
 
-    #print(part1(instructions, mappings))
+    print(part1(instructions, mappings))
     print(part2(instructions, mappings))
 
 if __name__ == '__main__':
